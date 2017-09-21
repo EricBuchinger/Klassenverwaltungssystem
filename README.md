@@ -7,7 +7,7 @@
   - Pull Repository
   - Push to Repository
   
-> Write an description!
+> Write a description!
 
 
 ### Navigate to your working directory(where the .git file is located)
