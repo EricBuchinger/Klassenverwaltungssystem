@@ -1,8 +1,8 @@
 # Organicer
 
+![alt text](http://www.androidpolice.com/wp-content/uploads/2014/03/nexusae0_PoweredbyAndroid-Thumb.png)
+![alt text](http://datao.sourceforge.net/java.png)
 
-[![N|Solid](http://www.androidpolice.com/wp-content/uploads/2014/03/nexusae0_PoweredbyAndroid-Thumb.png)](https://nodesource.com/products/nsolid) 
-[![N|Solid](http://tekeye.uk/programming/images/java_powered.png)](https://nodesource.com/products/nsolid)
 
 ## New Features!
 
