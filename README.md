@@ -1,8 +1,10 @@
-# Klassenverwaltungssystem
+# Organicer
 
 
+[![N|Solid](http://www.androidpolice.com/wp-content/uploads/2014/03/nexusae0_PoweredbyAndroid-Thumb.png)](https://nodesource.com/products/nsolid) 
+[![N|Solid](http://tekeye.uk/programming/images/java_powered.png)](https://nodesource.com/products/nsolid)
 
-# New Features!
+## New Features!
 
   - Pull Repository
   - Push to Repository
@@ -29,6 +31,4 @@ $ git commit -m "What have been added/deletet?"
 $ git push origin branch
 ```
 
-[![N|Solid](http://www.androidpolice.com/wp-content/uploads/2014/03/nexusae0_PoweredbyAndroid-Thumb.png)](https://nodesource.com/products/nsolid) 
-[![N|Solid](http://tekeye.uk/programming/images/java_powered.png)](https://nodesource.com/products/nsolid)
 
