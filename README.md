@@ -1,7 +1,6 @@
 # Organicer
 
-![alt text](http://www.androidpolice.com/wp-content/uploads/2014/03/nexusae0_PoweredbyAndroid-Thumb.png)
-![alt text](http://datao.sourceforge.net/java.png)
+![alt text](https://i.imgur.com/3DxieTj.jpg)
 
 
 ## New Features!
