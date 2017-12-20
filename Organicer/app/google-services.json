@@ -1,0 +1,58 @@
+{
+  "project_info": {
+    "project_number": "709858826075",
+    "firebase_url": "https://organicer-d3382.firebaseio.com",
+    "project_id": "organicer-d3382",
+    "storage_bucket": "organicer-d3382.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:709858826075:android:c3e0430f0c8e3c94",
+        "android_client_info": {
+          "package_name": "at.htl.organicer"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "709858826075-l2buplpvccmnduhl7dbp5jnt06epaqjr.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "at.htl.organicer",
+            "certificate_hash": "7c8118f11890a359f180980d8ee04cafb94ead66"
+          }
+        },
+        {
+          "client_id": "709858826075-5fbtl2ksegm3luqri5ogmd83s1nttojl.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBtywVEVx3qUlvqepA-VzoeeCT_rkiwaAI"
+        },
+        {
+          "current_key": "AIzaSyBk-_fQSP6jY3rj3wil64xKvodQ-mgy1jI"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 2,
+          "other_platform_oauth_client": [
+            {
+              "client_id": "709858826075-5fbtl2ksegm3luqri5ogmd83s1nttojl.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

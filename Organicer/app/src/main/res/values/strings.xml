@@ -1,3 +1,8 @@
 <resources>
     <string name="app_name">Organicer</string>
+
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="facebook_app_id">553760705015409</string>
+    <string name="fb_login_protocol_scheme">fb553760705015409</string>
+
 </resources>
