@@ -100,6 +100,7 @@ public class StartupActivity extends AppCompatActivity implements WebUntisUserFr
 
         //startAuthentication
         FirebaseAuth auth = FirebaseAuth.getInstance();
+        auth.signOut();
         Intent intent = new Intent(this, AuthenticationActivity.class);
         if (auth.getCurrentUser() == null) {
             startActivityForResult(intent,RID);
