@@ -103,7 +103,7 @@ public class StartUpFragmentPortrait extends Fragment {
         fab_feature1.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                getFragmentManager().beginTransaction().replace(R.id.container_main, new WebUntisDemoFragment(), null).addToBackStack("TeachersView").commit();
+                getFragmentManager().beginTransaction().replace(R.id.container_main, new AddEventFragment(), null).addToBackStack("AddEventView").commit();
             }
         });
         FloatingActionButton fab_logout = v.findViewById(R.id.fab_logout);
