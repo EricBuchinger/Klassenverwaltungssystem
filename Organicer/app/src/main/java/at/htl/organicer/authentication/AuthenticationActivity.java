@@ -47,12 +47,13 @@ import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.GoogleAuthProvider;
 
 import at.htl.organicer.R;
+import at.htl.organicer.database.FirebaseContext;
 
 
 public class AuthenticationActivity extends AppCompatActivity implements View.OnClickListener {
 
     private static final String TAG = "AuthenticationActivity";
-    private FirebaseAuth mAuth;
+    private FirebaseContext firebaseContext;
     private CallbackManager mCallbackManager;
     private static LoginButton loginButton;
     private AuthCredential credential;
@@ -64,13 +65,15 @@ public class AuthenticationActivity extends AppCompatActivity implements View.On
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_authentication);
 
+        firebaseContext = FirebaseContext.getInstance();
+
         //Init Facebook Authentication
         FacebookSdk.sdkInitialize(getApplicationContext());
         AppEventsLogger.activateApp(this);
 
 
         //Init Firebase Authentication
-        mAuth = FirebaseAuth.getInstance();
+        firebaseContext.mAuth = FirebaseAuth.getInstance();
         mCallbackManager = CallbackManager.Factory.create();
 
         //Init Google Authentication
@@ -137,7 +140,7 @@ public class AuthenticationActivity extends AppCompatActivity implements View.On
         Log.d(TAG, "firebaseAuthWithGoogle:" + acct.getId());
 
         AuthCredential credential = GoogleAuthProvider.getCredential(acct.getIdToken(), null);
-        mAuth.signInWithCredential(credential)
+        firebaseContext.mAuth.signInWithCredential(credential)
                 .addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
                     @Override
                     public void onComplete(@NonNull Task<AuthResult> task) {
@@ -160,7 +163,7 @@ public class AuthenticationActivity extends AppCompatActivity implements View.On
         Log.d(TAG, "handleFacebookAccessToken:" + token);
 
         credential = FacebookAuthProvider.getCredential(token.getToken());
-        mAuth.signInWithCredential(credential)
+        firebaseContext.mAuth.signInWithCredential(credential)
                 .addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
                     @Override
                     public void onComplete(@NonNull Task<AuthResult> task) {

@@ -3,12 +3,25 @@ package at.htl.organicer.fragments;
 import android.content.Context;
 import android.net.Uri;
 import android.os.Bundle;
+import android.support.design.widget.FloatingActionButton;
+import android.support.design.widget.TextInputEditText;
 import android.support.v4.app.Fragment;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.DatePicker;
+import android.widget.Toast;
+
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+
+import java.util.Calendar;
+import java.util.Date;
 
 import at.htl.organicer.R;
+import at.htl.organicer.entities.Event;
 
 
 //Created by eric on 11.01.2018
@@ -18,9 +31,13 @@ public class AddEventFragment extends Fragment {
     private static final String ARG_PARAM1 = "param1";
     private static final String ARG_PARAM2 = "param2";
 
-    // TODO: Rename and change types of parameters
-    private String mParam1;
-    private String mParam2;
+    private FloatingActionButton fab_AddNewEvent;
+    private TextInputEditText txtInput_Subject;
+    private TextInputEditText txtInput_EventName;
+    private DatePicker datePicker;
+    private Event event;
+    private DatabaseReference mDatabase;
+    private  static final String TAG = "AddEventFragment";
 
 
     public AddEventFragment() {
@@ -48,17 +65,54 @@ public class AddEventFragment extends Fragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        if (getArguments() != null) {
-            mParam1 = getArguments().getString(ARG_PARAM1);
-            mParam2 = getArguments().getString(ARG_PARAM2);
-        }
+        event = new Event();
+        mDatabase = FirebaseDatabase.getInstance().getReference();
     }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_add_event, container, false);
+        View v =  inflater.inflate(R.layout.fragment_add_event, container, false);
+
+        fab_AddNewEvent = v.findViewById(R.id.fab_AddEvent);
+        txtInput_EventName = v.findViewById(R.id.txtInput_EventName);
+        txtInput_Subject = v.findViewById(R.id.txtInput_Subject);
+        datePicker = v.findViewById(R.id.dp_AddEvent);
+        fab_AddNewEvent.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                String eventName = txtInput_EventName.getText().toString();
+                String eventSubject = txtInput_Subject.getText().toString();
+                int day = datePicker.getDayOfMonth();
+                int month = datePicker.getMonth();
+                int year =  datePicker.getYear();
+
+                Calendar calendar = Calendar.getInstance();
+                calendar.set(year, month, day);
+                Date date = calendar.getTime();
+
+                if(eventName!=null && eventSubject!=null){
+                    event.setName(eventName);
+                    event.setSubject(eventSubject);
+                    event.setDate(date);
+                    try {
+                        mDatabase.child("events").setValue(event);
+                        Toast.makeText(getContext(),"Event wurde erfolgreich erstellt",Toast.LENGTH_SHORT);
+                        getActivity().getSupportFragmentManager().
+                                beginTransaction().
+                                replace(R.id.container_main,new StartUpFragmentPortrait()).
+                                commit();
+                    }catch (Exception e){
+                        Log.e(TAG,"Event konnte nicht in die Datenbank gespeichert werden!");
+                    }
+
+                }
+              //Todo initialize
+            }
+        });
+
+        return v;
     }
 
     // TODO: Rename method, update argument and hook method into UI event

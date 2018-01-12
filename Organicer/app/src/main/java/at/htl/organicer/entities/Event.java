@@ -11,7 +11,7 @@ public class Event implements Serializable {
     private int id;
     private String name;
     private Date date;
-    private String description;
+    private String subject;
 
     //region Getter & Setter
     public int getId() {
@@ -38,12 +38,12 @@ public class Event implements Serializable {
         this.date = date;
     }
 
-    public String getDescription() {
-        return description;
+    public String getSubject() {
+        return subject;
     }
 
-    public void setDescription(String description) {
-        this.description = description;
+    public void setSubject(String subject) {
+        this.subject = subject;
     }
     //endregion
 
@@ -51,15 +51,15 @@ public class Event implements Serializable {
 
     }
 
-    public Event(int id, String name, Date date, String description){
+    public Event(int id, String name, Date date, String subject){
         setId(id);
         setName(name);
         setDate(date);
-        setDescription(description);
+        setSubject(subject);
     }
 
     @Override
     public String toString() {
-        return "Id: " + id + "\n" + "Name: " + "Description: " + description + "\n" + "Date: " + date.toString();
+        return "Id: " + id + "\n" + "Name: " + "Description: " + subject + "\n" + "Date: " + date.toString();
     }
 }

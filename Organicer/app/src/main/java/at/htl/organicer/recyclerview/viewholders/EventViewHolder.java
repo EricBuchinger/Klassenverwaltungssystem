@@ -20,6 +20,6 @@ public class EventViewHolder extends RecyclerView.ViewHolder {
 
     public void updateUI(Event event){
         tv1.setText(String.format("%d: %s", event.getId(), event.getName()));
-        tv2.setText(event.getDescription());
+        tv2.setText(event.getSubject());
     }
 }

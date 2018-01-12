@@ -25,8 +25,10 @@ import java.util.Locale;
 import at.htl.organicer.R;
 import at.htl.organicer.activities.StartupActivity;
 import at.htl.organicer.authentication.AuthenticationActivity;
+import at.htl.organicer.database.FirebaseContext;
 import at.htl.organicer.entities.TimeUnit;
 import at.htl.organicer.entities.Weekday;
+import at.htl.organicer.recyclerview.adapters.EventAdapter;
 import at.htl.organicer.recyclerview.adapters.TimeTableEntryAdapter;
 
 import static at.htl.organicer.activities.StartupActivity.dataHelper;
@@ -40,6 +42,7 @@ public class StartUpFragmentPortrait extends Fragment {
     // TODO: Rename and change types of parameters
     private String mParam1;
     private String mParam2;
+    private FirebaseContext firebaseContext;
 
     private OnFragmentInteractionListener mListener;
 
@@ -60,6 +63,9 @@ public class StartUpFragmentPortrait extends Fragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+        firebaseContext = FirebaseContext.getInstance();
+
         if (getArguments() != null) {
             mParam1 = getArguments().getString(ARG_PARAM1);
             mParam2 = getArguments().getString(ARG_PARAM2);
@@ -74,7 +80,6 @@ public class StartUpFragmentPortrait extends Fragment {
 
         //TODO
         RecyclerView rvTimeTableEntries = v.findViewById(R.id.rv_timeTableEntries);
-        TextView tv_weekday = v.findViewById(R.id.tv_weekday);
 
         Calendar calendar = Calendar.getInstance();
         Date date = calendar.getTime();
@@ -87,9 +92,6 @@ public class StartUpFragmentPortrait extends Fragment {
                 timeUnitsOfToday = dataHelper.getTimeGrids().get(i).getTimeUnits();
                 //SpannableString todayString = new SpannableString(dataHelper.getTimeGrids().get(i).getWeekday().toString());
                 //todayString.setSpan(new AbsoluteSizeSpan(30), 0, todayString.length(), 0);
-
-                //FIXME Tryhard RichTextView
-                tv_weekday.setText(dataHelper.getTimeGrids().get(i).getWeekday().toString());
             }
 
         if(timeUnitsOfToday.size() == 0) throw new RuntimeException("Today is not found");
@@ -116,7 +118,7 @@ public class StartUpFragmentPortrait extends Fragment {
             }
         });
 
-        TimeTableEntryAdapter adapter = new TimeTableEntryAdapter(timeUnitsOfToday);
+        EventAdapter adapter = new EventAdapter(firebaseContext.events);
         LinearLayoutManager llm = new LinearLayoutManager(getContext(), LinearLayoutManager.VERTICAL, false);
         rvTimeTableEntries.setLayoutManager(llm);
         rvTimeTableEntries.setAdapter(adapter);
