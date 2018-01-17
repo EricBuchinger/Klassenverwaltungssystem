@@ -14,7 +14,7 @@ fürs Lernen zu investieren zu können.
 
 
 ### Navigate to your working directory(where the .git file is located)
-#### Actual Branch is : Oktober!
+#### Actual Branch is : dezember!
 
 ### HowTo : Pull
 
