@@ -5,8 +5,10 @@
 
 ## New Features!
 
-  - Pull Repository
-  - Push to Repository
+  - Event hinzufügen
+  - Mit Facebook einloggen
+  - Mit Google einloggen
+  - Verknüpfung des WebUntis Konto mit der App herstellen
   
 > Dadurch, dass man fehlende Lernunterlagen hat, kann man schwer für Tests oder etwaige Sachen lernen. Die Unterlagen werden durch Social-Media Plattformen geteilt, sind jedoch nicht übersichtlich gegenzeichnet und damit verliert man viel Zeit beim Suchen oder es wird sogar nichts gefunden. Die Organisation funktioniert, aber ist jedoch sehr mühsam und leicht zum 
 unterschätzen bzw. zu übersehen.Ziel ist es daher mit dem Organicer die Planung innerhalb des Schuljahres zu verbessern und  eine Möglichkeit zu entwickeln um das Sortieren, Filtern und Suchen der Schulunterlagen zu erleichtern um somit die Zeit
@@ -28,7 +30,7 @@ $ git pull origin branch
 ```sh
 $ git checkout branch
 $ git add .
-$ git commit -m "What have been added/deletet?"
+$ git commit -m "What have been added/deleted?"
 $ git push origin branch
 ```
 
