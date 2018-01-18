@@ -17,11 +17,15 @@
 package at.htl.organicer.authentication;
 
 import android.content.Intent;
+import android.content.res.AssetManager;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.View;
+import android.widget.ImageView;
 import android.widget.Toast;
 
 import com.facebook.AccessToken;
@@ -46,6 +50,9 @@ import com.google.firebase.auth.FacebookAuthProvider;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.GoogleAuthProvider;
 
+import java.io.IOException;
+import java.io.InputStream;
+
 import at.htl.organicer.R;
 import at.htl.organicer.database.FirebaseContext;
 
@@ -59,11 +66,20 @@ public class AuthenticationActivity extends AppCompatActivity implements View.On
     private AuthCredential credential;
     private static final int RC_SIGN_IN = 9001;
     private static GoogleSignInClient mGoogleSignInClient;
+    private ImageView backgroundImageView;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_authentication);
+
+        backgroundImageView = findViewById(R.id.iv_background);
+        try {
+            backgroundImageView.setImageBitmap(getBitmapFromAssets("background.jpg"));
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        //backgroundImageView
 
         firebaseContext = FirebaseContext.getInstance();
 
@@ -110,6 +126,15 @@ public class AuthenticationActivity extends AppCompatActivity implements View.On
             }
         });
 
+    }
+
+    public Bitmap getBitmapFromAssets(String fileName) throws IOException {
+        AssetManager assetManager = getAssets();
+
+        InputStream istr = assetManager.open(fileName);
+        Bitmap bitmap = BitmapFactory.decodeStream(istr);
+
+        return bitmap;
     }
 
 

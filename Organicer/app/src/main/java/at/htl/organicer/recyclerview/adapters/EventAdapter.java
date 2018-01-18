@@ -8,6 +8,9 @@ import android.view.ViewGroup;
 import java.util.LinkedList;
 import java.util.List;
 
+
+
+import at.htl.organicer.R;
 import at.htl.organicer.entities.Event;
 import at.htl.organicer.recyclerview.viewholders.EventViewHolder;
 
@@ -24,7 +27,7 @@ public class EventAdapter extends RecyclerView.Adapter<EventViewHolder> {
     }
     @Override
     public EventViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        View v = LayoutInflater.from(parent.getContext()).inflate(android.R.layout.simple_list_item_2, parent, false);
+        View v = LayoutInflater.from(parent.getContext()).inflate(R.layout.timetableentry_layout, parent, false);
         return new EventViewHolder(v);
     }
 

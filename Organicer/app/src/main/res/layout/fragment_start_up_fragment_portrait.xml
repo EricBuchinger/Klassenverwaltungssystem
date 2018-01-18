@@ -20,7 +20,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
-        app:layout_constraintGuide_percent="0.85" />
+        app:layout_constraintGuide_percent="0.87" />
 
     <android.support.constraint.Guideline
         android:id="@+id/guideline5"
@@ -80,7 +80,7 @@
         android:layout_marginTop="10dp"
         android:clickable="true"
         android:src="@android:drawable/ic_input_add"
-        android:tint="@android:color/black"
+        android:tint="@android:color/white"
         app:backgroundTint="@color/com_smart_login_code"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toStartOf="@+id/guideline5"
@@ -142,7 +142,7 @@
         android:layout_marginTop="10dp"
         android:clickable="true"
         android:src="@android:drawable/ic_lock_power_off"
-        android:tint="@android:color/black"
+        android:tint="@android:color/white"
         app:backgroundTint="@color/com_smart_login_code"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
