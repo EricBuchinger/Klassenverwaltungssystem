@@ -115,8 +115,10 @@ public class FirebaseContext {
         postEventListener = new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
+                events.clear();
                 for(DataSnapshot postSnapshot : dataSnapshot.getChildren()){
-                    Event e = dataSnapshot.getValue(Event.class);
+                    Event e = postSnapshot.getValue(Event.class);
+                    events.add(e);
                 }
             }
 

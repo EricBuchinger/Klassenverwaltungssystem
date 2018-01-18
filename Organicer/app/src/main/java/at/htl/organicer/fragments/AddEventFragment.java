@@ -21,6 +21,7 @@ import java.util.Calendar;
 import java.util.Date;
 
 import at.htl.organicer.R;
+import at.htl.organicer.database.FirebaseContext;
 import at.htl.organicer.entities.Event;
 
 
@@ -97,12 +98,10 @@ public class AddEventFragment extends Fragment {
                     event.setSubject(eventSubject);
                     event.setDate(date);
                     try {
-                        mDatabase.child("events").setValue(event);
+                        int id = FirebaseContext.getInstance().events.size()+1;
+                        mDatabase.child("events").child(String.valueOf(String.valueOf(id))).setValue(event);
                         Toast.makeText(getContext(),"Event wurde erfolgreich erstellt",Toast.LENGTH_SHORT);
-                        getActivity().getSupportFragmentManager().
-                                beginTransaction().
-                                replace(R.id.container_main,new StartUpFragmentPortrait()).
-                                commit();
+                        getFragmentManager().popBackStack();
                     }catch (Exception e){
                         Log.e(TAG,"Event konnte nicht in die Datenbank gespeichert werden!");
                     }
@@ -129,5 +128,7 @@ public class AddEventFragment extends Fragment {
     public void onDetach() {
         super.onDetach();
     }
+
+
 
 }
