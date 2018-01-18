@@ -83,7 +83,7 @@ public class FirebaseContext {
                         String sessionId = RestHelperAlternative.authUser(webUntisUser.getUsername(), webUntisUser.getPassword());
                         if(sessionId==null){
                             Log.e(TAG,"Falscher Benutzername oder Passwort!");
-                            showError("Sie haben einen falschen Benutzernamen oder ein falsches Passwort eingegeben!");
+                                showError("Sie haben einen falschen Benutzernamen oder ein falsches Passwort eingegeben!");
 
                             if(webUntisUserFragment==null) {
                                 webUntisUserFragment = new WebUntisUserFragment();

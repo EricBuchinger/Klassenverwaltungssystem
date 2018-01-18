@@ -19,6 +19,7 @@ import com.google.firebase.database.FirebaseDatabase;
 
 import java.util.Calendar;
 import java.util.Date;
+import java.util.LinkedList;
 
 import at.htl.organicer.R;
 import at.htl.organicer.database.FirebaseContext;
@@ -39,6 +40,7 @@ public class AddEventFragment extends Fragment {
     private Event event;
     private DatabaseReference mDatabase;
     private  static final String TAG = "AddEventFragment";
+    private FirebaseContext mContext;
 
 
     public AddEventFragment() {
@@ -68,6 +70,7 @@ public class AddEventFragment extends Fragment {
         super.onCreate(savedInstanceState);
         event = new Event();
         mDatabase = FirebaseDatabase.getInstance().getReference();
+        mContext = FirebaseContext.getInstance();
     }
 
     @Override
@@ -98,7 +101,9 @@ public class AddEventFragment extends Fragment {
                     event.setSubject(eventSubject);
                     event.setDate(date);
                     try {
-                        int id = FirebaseContext.getInstance().events.size()+1;
+                        LinkedList<Event> events = mContext.events;
+                        int id = events.size();
+                        event.setId(id);
                         mDatabase.child("events").child(String.valueOf(String.valueOf(id))).setValue(event);
                         Toast.makeText(getContext(),"Event wurde erfolgreich erstellt",Toast.LENGTH_SHORT);
                         getFragmentManager().popBackStack();
