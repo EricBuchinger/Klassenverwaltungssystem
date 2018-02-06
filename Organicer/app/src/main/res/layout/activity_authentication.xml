@@ -12,11 +12,13 @@
         android:id="@+id/iv_background"
         android:layout_width="0dp"
         android:layout_height="0dp"
+        android:adjustViewBounds="false"
+        android:cropToPadding="false"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:srcCompat="@drawable/com_facebook_auth_dialog_background" />
+        app:srcCompat="@drawable/ic_design_ohne_titel" />
 
 
     <android.support.constraint.Guideline

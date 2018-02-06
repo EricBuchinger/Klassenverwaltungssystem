@@ -76,7 +76,7 @@ public class FirebaseContext {
                     if (webUntisUserFragment == null)
                         webUntisUserFragment = new WebUntisUserFragment();
 
-                    fragmentManager.beginTransaction().replace(R.id.container_main, webUntisUserFragment, null).commit();
+                    fragmentManager.beginTransaction().replace(R.id.container_main, webUntisUserFragment, "WebUntisUserFragment").commit();
                 }
                 else{
                     try {
@@ -88,14 +88,14 @@ public class FirebaseContext {
                             if(webUntisUserFragment==null) {
                                 webUntisUserFragment = new WebUntisUserFragment();
                             }
-                            fragmentManager.beginTransaction().replace(R.id.container_main, webUntisUserFragment, null).commit();
+                            fragmentManager.beginTransaction().replace(R.id.container_main, webUntisUserFragment, "WebUntisUserFragment").commit();
                         }
                         if(sessionId!=null) {
                             dataHelper.setSessionId(sessionId);
                             dataHelper = RestHelperAlternative.getDataFromWebuntis(dataHelper);
                             fragmentManager
                                     .beginTransaction()
-                                    .replace(R.id.container_main, new StartUpFragmentPortrait())
+                                    .replace(R.id.container_main, new StartUpFragmentPortrait(),"StartUpPortraitFragment")
                                     .commit();
                         }
 
@@ -119,7 +119,12 @@ public class FirebaseContext {
                 for(DataSnapshot postSnapshot : dataSnapshot.getChildren()){
                     Event e = postSnapshot.getValue(Event.class);
                     events.add(e);
+
                 }
+                StartUpFragmentPortrait startUpFragmentPortrait = (StartUpFragmentPortrait)fragmentManager
+                        .findFragmentByTag("StartUpPortraitFragment");
+                if(startUpFragmentPortrait!=null)
+                    startUpFragmentPortrait.notifyAdapter();
             }
 
             @Override

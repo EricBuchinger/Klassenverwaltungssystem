@@ -18,8 +18,8 @@ public class TimeTableEntryViewHolder extends RecyclerView.ViewHolder {
     ImageButton imageBtnPlus;
     public TimeTableEntryViewHolder(View itemView) {
         super(itemView);
-        tv_time = itemView.findViewById(R.id.tv_StartTime);
-        tv_info = itemView.findViewById(R.id.tv_Info);
+        //tv_time = itemView.findViewById(R.id.tv_StartTime);
+        //tv_info = itemView.findViewById(R.id.tv_Info);
         imageBtnPlus = itemView.findViewById(R.id.imageBtnPlus);
     }
 

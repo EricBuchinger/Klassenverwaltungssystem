@@ -9,9 +9,7 @@ import java.util.LinkedList;
 import java.util.List;
 
 import at.htl.organicer.R;
-import at.htl.organicer.entities.Teacher;
 import at.htl.organicer.entities.TimeUnit;
-import at.htl.organicer.recyclerview.viewholders.TeacherViewHolder;
 import at.htl.organicer.recyclerview.viewholders.TimeTableEntryViewHolder;
 
 /**
@@ -27,7 +25,7 @@ public class TimeTableEntryAdapter extends RecyclerView.Adapter<TimeTableEntryVi
     }
     @Override
     public TimeTableEntryViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        View v = LayoutInflater.from(parent.getContext()).inflate(R.layout.timetableentry_layout, parent, false);
+        View v = LayoutInflater.from(parent.getContext()).inflate(R.layout.event_entry_layout, parent, false);
         return new TimeTableEntryViewHolder(v);
     }
 

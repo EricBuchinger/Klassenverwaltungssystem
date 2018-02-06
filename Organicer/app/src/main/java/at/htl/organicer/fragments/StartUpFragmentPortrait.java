@@ -43,6 +43,7 @@ public class StartUpFragmentPortrait extends Fragment {
     private String mParam1;
     private String mParam2;
     private FirebaseContext firebaseContext;
+    private EventAdapter adapter;
 
     private OnFragmentInteractionListener mListener;
 
@@ -118,7 +119,7 @@ public class StartUpFragmentPortrait extends Fragment {
             }
         });
 
-        EventAdapter adapter = new EventAdapter(firebaseContext.events);
+        adapter = new EventAdapter(firebaseContext.events);
         LinearLayoutManager llm = new LinearLayoutManager(getContext(), LinearLayoutManager.VERTICAL, false);
         rvTimeTableEntries.setLayoutManager(llm);
         rvTimeTableEntries.setAdapter(adapter);
@@ -130,5 +131,10 @@ public class StartUpFragmentPortrait extends Fragment {
     public interface OnFragmentInteractionListener {
         // TODO: Update argument type and name
         void onFragmentInteraction(Uri uri);
+    }
+    public void notifyAdapter(){
+      if(adapter!=null){
+          adapter.notifyDataSetChanged();
+      }
     }
 }

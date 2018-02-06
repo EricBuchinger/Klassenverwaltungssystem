@@ -4,6 +4,7 @@ import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.widget.TextView;
 
+import at.htl.organicer.R;
 import at.htl.organicer.entities.Event;
 
 /**
@@ -14,8 +15,8 @@ public class EventViewHolder extends RecyclerView.ViewHolder {
     TextView tv1, tv2;
     public EventViewHolder(View itemView) {
         super(itemView);
-        tv1 = itemView.findViewById(android.R.id.text1);
-        tv2 = itemView.findViewById(android.R.id.text2);
+        tv1 = itemView.findViewById(R.id.tv_event_name);
+        tv2 = itemView.findViewById(R.id.tv_subject);
     }
 
     public void updateUI(Event event){

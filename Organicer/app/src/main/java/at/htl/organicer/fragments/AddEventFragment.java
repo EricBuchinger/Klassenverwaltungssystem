@@ -105,7 +105,7 @@ public class AddEventFragment extends Fragment {
                         int id = events.size();
                         event.setId(id);
                         mDatabase.child("events").child(String.valueOf(String.valueOf(id))).setValue(event);
-                        Toast.makeText(getContext(),"Event wurde erfolgreich erstellt",Toast.LENGTH_SHORT);
+                        Toast.makeText(getActivity().getApplicationContext(),"Event wurde erfolgreich erstellt",Toast.LENGTH_LONG);
                         getFragmentManager().popBackStack();
                     }catch (Exception e){
                         Log.e(TAG,"Event konnte nicht in die Datenbank gespeichert werden!");
