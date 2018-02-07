@@ -1,5 +1,6 @@
 package at.htl.organicer.database;
 
+import android.content.Context;
 import android.support.v7.app.AlertDialog;
 import android.util.Log;
 
@@ -19,8 +20,10 @@ import java.util.List;
 
 import at.htl.organicer.R;
 import at.htl.organicer.activities.StartupActivity;
+import at.htl.organicer.authentication.AuthenticationActivity;
 import at.htl.organicer.entities.Event;
 import at.htl.organicer.entities.WebUntisUser;
+import at.htl.organicer.fragments.LoadingbarFragment;
 import at.htl.organicer.fragments.StartUpFragmentPortrait;
 import at.htl.organicer.fragments.WebUntisUserFragment;
 import at.htl.organicer.rest.RestHelperAlternative;
@@ -43,6 +46,8 @@ public class FirebaseContext {
     private ValueEventListener postEventListener;
     public LinkedList<Event> events;
     public WebUntisUser webUntisUser;
+    private LoadingbarFragment loadingbarFragment;
+    private Context context;
 
     public static FirebaseContext getInstance(){
         if(instance==null){
@@ -65,6 +70,8 @@ public class FirebaseContext {
         mAuth = FirebaseAuth.getInstance();
         events = new LinkedList<>();
         webUntisUser = new WebUntisUser();
+        loadingbarFragment = new LoadingbarFragment();
+
 
         postUserListener = new ValueEventListener() {
             @Override
@@ -89,14 +96,19 @@ public class FirebaseContext {
                                 webUntisUserFragment = new WebUntisUserFragment();
                             }
                             fragmentManager.beginTransaction().replace(R.id.container_main, webUntisUserFragment, "WebUntisUserFragment").commit();
+                            //fragmentManager.beginTransaction().add(R.id.container_main, loadingbarFragment, "LoadingbarFragment").commit();
                         }
                         if(sessionId!=null) {
                             dataHelper.setSessionId(sessionId);
                             dataHelper = RestHelperAlternative.getDataFromWebuntis(dataHelper);
+                            //fragmentManager.beginTransaction().remove(loadingbarFragment).commit(); //todo
+
                             fragmentManager
                                     .beginTransaction()
                                     .replace(R.id.container_main, new StartUpFragmentPortrait(),"StartUpPortraitFragment")
                                     .commit();
+                            //context.getApplicationContext()
+                            //AuthenticationActivity.getInstance().onBackPressed(); FIXME
                         }
 
                     } catch (JSONException | IOException e) {

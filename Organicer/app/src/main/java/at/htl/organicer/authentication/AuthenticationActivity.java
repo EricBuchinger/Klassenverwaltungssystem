@@ -16,14 +16,18 @@
 
 package at.htl.organicer.authentication;
 
+import android.app.Application;
+import android.content.Context;
 import android.content.Intent;
 import android.content.res.AssetManager;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
+import android.support.transition.Transition;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
+import android.view.KeyEvent;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.Toast;
@@ -49,14 +53,13 @@ import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FacebookAuthProvider;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.GoogleAuthProvider;
-import com.google.firebase.database.DatabaseReference;
-import com.google.firebase.database.FirebaseDatabase;
 
 import java.io.IOException;
 import java.io.InputStream;
 
 import at.htl.organicer.R;
 import at.htl.organicer.database.FirebaseContext;
+import at.htl.organicer.fragments.LoadingbarFragment;
 
 
 public class AuthenticationActivity extends AppCompatActivity implements View.OnClickListener {
@@ -69,10 +72,14 @@ public class AuthenticationActivity extends AppCompatActivity implements View.On
     private static final int RC_SIGN_IN = 9001;
     private static GoogleSignInClient mGoogleSignInClient;
     private ImageView backgroundImageView;
+    LoadingbarFragment loadingbarFragment;
 
+    private static AuthenticationActivity instance;
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+        instance = this;
         setContentView(R.layout.activity_authentication);
 
         backgroundImageView = findViewById(R.id.iv_background);
@@ -84,6 +91,7 @@ public class AuthenticationActivity extends AppCompatActivity implements View.On
         //backgroundImageView
 
         firebaseContext = FirebaseContext.getInstance();
+        //transaction = getSupportFragmentManager().beginTransaction();
 
         //Init Facebook Authentication
         FacebookSdk.sdkInitialize(getApplicationContext());
@@ -93,6 +101,7 @@ public class AuthenticationActivity extends AppCompatActivity implements View.On
         //Init Firebase Authentication
         firebaseContext.mAuth = FirebaseAuth.getInstance();
         mCallbackManager = CallbackManager.Factory.create();
+        loadingbarFragment = new LoadingbarFragment();
 
         //Init Google Authentication
         GoogleSignInOptions gso = new GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
@@ -155,11 +164,15 @@ public class AuthenticationActivity extends AppCompatActivity implements View.On
                 Toast.makeText(AuthenticationActivity.this, "Authentication with Google failed.",
                         Toast.LENGTH_SHORT).show();
             }
+
+
+            super.onBackPressed(); //FIXME
         }
         //If the requestCode isn't for Google, complete the facebook signIn progress
         else {
             mCallbackManager.onActivityResult(requestCode, resultCode, data);
         }
+
     }
 
     //Sign in to firebase with credential
@@ -180,6 +193,7 @@ public class AuthenticationActivity extends AppCompatActivity implements View.On
                             Toast.makeText(AuthenticationActivity.this, "Authentication with Google failed.",
                                     Toast.LENGTH_SHORT).show();
                         }
+
                         finish();
                     }
                 });
@@ -187,23 +201,28 @@ public class AuthenticationActivity extends AppCompatActivity implements View.On
 
     //Sign in in Firebase with the Facebook Token
     private void handleFacebookAccessToken(AccessToken token) {
+
+
         Log.d(TAG, "handleFacebookAccessToken:" + token);
 
         credential = FacebookAuthProvider.getCredential(token.getToken());
+       // getSupportFragmentManager().beginTransaction().add(R.id.container_signIn, loadingbarFragment, "LOADING").commit();
         firebaseContext.mAuth.signInWithCredential(credential)
                 .addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
                     @Override
                     public void onComplete(@NonNull Task<AuthResult> task) {
                         if (task.isSuccessful()) {
+                            //getSupportFragmentManager().beginTransaction().remove(loadingbarFragment).commit();
                             Toast.makeText(AuthenticationActivity.this, "Authentication with Facebook successful.",
                                     Toast.LENGTH_SHORT).show();
                             finish();
                         } else {
-
                             Log.w(TAG, "signInWithCredential:failure", task.getException());
                             Toast.makeText(AuthenticationActivity.this, "Authentication with Facebook failed.",
                                     Toast.LENGTH_SHORT).show();
                         }
+
+                        //AuthenticationActivity.super.onBackPressed();
                         finish();
                     }
                 });
@@ -223,13 +242,20 @@ public class AuthenticationActivity extends AppCompatActivity implements View.On
     //
     // Activity of Google
     private void signIn() {
+        getSupportFragmentManager().beginTransaction().add(R.id.container_signIn, loadingbarFragment, "LOADING").addToBackStack("loading").commit();
         Intent signInIntent = mGoogleSignInClient.getSignInIntent();
         startActivityForResult(signInIntent, RC_SIGN_IN);
+
+        //todo
     }
 
     public static void signOut() {
         FirebaseAuth.getInstance().signOut();
         mGoogleSignInClient.signOut();
         LoginManager.getInstance().logOut();
+    }
+
+    public static AuthenticationActivity getInstance() {
+        return instance;
     }
 }
