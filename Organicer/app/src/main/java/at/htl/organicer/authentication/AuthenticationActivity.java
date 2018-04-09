@@ -29,6 +29,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.KeyEvent;
 import android.view.View;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.Toast;
 
@@ -65,9 +66,11 @@ import at.htl.organicer.fragments.LoadingbarFragment;
 public class AuthenticationActivity extends AppCompatActivity implements View.OnClickListener {
 
     private static final String TAG = "AuthenticationActivity";
+    private static final String GOOGLEDEMOUSERTOKEN = "";
     private FirebaseContext firebaseContext;
     private CallbackManager mCallbackManager;
     private static LoginButton loginButton;
+    private Button demoButton;
     private AuthCredential credential;
     private static final int RC_SIGN_IN = 9001;
     private static GoogleSignInClient mGoogleSignInClient;
@@ -78,9 +81,16 @@ public class AuthenticationActivity extends AppCompatActivity implements View.On
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
         instance = this;
         setContentView(R.layout.activity_authentication);
+
+        demoButton = findViewById(R.id.demouser);
+        demoButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                finish();
+            }
+        });
 
         backgroundImageView = findViewById(R.id.iv_background);
         try {
