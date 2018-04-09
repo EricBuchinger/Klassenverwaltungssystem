@@ -3,13 +3,14 @@
 ![alt text](https://i.imgur.com/3DxieTj.jpg)
 
 
-## New Features!
+## Documentation
 
-  - Pull Repository
-  - Push to Repository
-  
-> Write a description!
-
+  - Login with your Facebook or Google Account and connect it to your WebUntis Account for easy and secure access!
+  - Add new events like incoming tests or homeworks!
+  - Only see the events from your classmates!
+  - You can easily choose if the the event is fake news or not. If more people confirm this, the event will be removed.
+ 
+ 
 
 ### Navigate to your working directory(where the .git file is located)
 #### Actual Branch is : Oktober!
