@@ -23,13 +23,15 @@ public class StartupActivity extends AppCompatActivity implements WebUntisUserFr
     private static int RID=1234;
     private static String TAG="StartupActivity";
     private FirebaseContext databaseContext;
+
+    private static StartupActivity instance;
     public static Context context;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_startup);
-
+        instance = this;
         databaseContext = FirebaseContext.getInstance();
         context = getApplicationContext();
         dataHelper = new SessionDataHelper();
@@ -57,6 +59,9 @@ public class StartupActivity extends AppCompatActivity implements WebUntisUserFr
         }
 
 
+    }
+    public static StartupActivity getInstance() {
+        return instance;
     }
 
 

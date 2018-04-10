@@ -16,6 +16,7 @@
 
 package at.htl.organicer.authentication;
 
+import android.app.Activity;
 import android.app.Application;
 import android.content.Context;
 import android.content.Intent;
@@ -49,12 +50,16 @@ import com.google.android.gms.auth.api.signin.GoogleSignInOptions;
 import com.google.android.gms.common.api.ApiException;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
+import com.google.firebase.FirebaseApp;
+import com.google.firebase.FirebaseOptions;
 import com.google.firebase.auth.AuthCredential;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FacebookAuthProvider;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.GoogleAuthProvider;
 
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStream;
 
@@ -66,7 +71,16 @@ import at.htl.organicer.fragments.LoadingbarFragment;
 public class AuthenticationActivity extends AppCompatActivity implements View.OnClickListener {
 
     private static final String TAG = "AuthenticationActivity";
-    private static final String GOOGLEDEMOUSERTOKEN = "";
+    private static final String GOOGLEDEMOUSERTOKEN = "eyJhbGciOiJSUzI1NiIsImtpZCI6IjNiNTQ3ODg2ZmY4NWEzNDI4ZGY0ZjYxZGI3M2Mx" +
+            "YzIzOTgyYTkyOGUifQ.eyJhenAiOiI3MDk4NTg4MjYwNzUtbDJidXBscHZjY21uZHVobDdkYnA1am50MDZlcGFxanIuYXBwcy5nb29nbGV1c2VyY2" +
+            "9udGVudC5jb20iLCJhdWQiOiI3MDk4NTg4MjYwNzUtNWZidGwya3NlZ20zbHVxcmk1b2dtZDgzczFudHRvamwuYXBwcy5nb29nbGV1c2VyY29udGV" +
+            "udC5jb20iLCJzdWIiOiIxMTc1NDkzOTc4ODAwNjQ5NDM2MjgiLCJlbWFpbCI6ImVyaWsuYnVjaGluZ2VyQGdtYWlsLmNvbSIsImVtYWlsX3Zlcmlma" +
+            "WVkIjp0cnVlLCJleHAiOjE1MjMyODg5MTEsImlzcyI6Imh0dHBzOi8vYWNjb3VudHMuZ29vZ2xlLmNvbSIsImlhdCI6MTUyMzI4NTMxMSwibmFtZSI6Ik" +
+            "VyaWMgQnVjaGluZ2VyIiwicGljdHVyZSI6Imh0dHBzOi8vbGg1Lmdvb2dsZXVzZXJjb250ZW50LmNvbS8tZlByTThzWGo1djgvQUFBQUFBQUFBQUkvQUF" +
+            "BQUFBQUFGa0EvSkVYMlA1V1duM3cvczk2LWMvcGhvdG8uanBnIiwiZ2l2ZW5fbmFtZSI6IkVyaWMiLCJmYW1pbHlfbmFtZSI6IkJ1Y2hpbmdlciIsImxvY" +
+            "2FsZSI6ImRlIn0.Gx8IRp3bkEmPBJuP0alqpoZKd85Ukp3RM7aFTiCmrUBU9xruFg5pbA5AfPV-qKp4evs6GLeC7wd_ZlvNEWcE3iFCZTv1XB5VJWnBvWkKW" +
+            "x8vFx0XbeJFFGD8MANkCo9LOUDKJxEWf31NyQGvpOPjgI-RaXZHo5VTOMr-sFY3rOjS_9PaUtLo4X0cKXmDeqgZgK5Y29AloxBeX2mmpjX7tHfsl-f7Q8fjE4" +
+            "eYAjPya00NIjIhTExMF91EQGsLFnxKLwZTTHBDIx_BMll79d1gWNtuqT9rHd5RzVoqxl0mWKuGD45cQfAc2uMQmd3Q40wreonzV4T4gMEsrmsVWqEp2w";
     private FirebaseContext firebaseContext;
     private CallbackManager mCallbackManager;
     private static LoginButton loginButton;
@@ -75,6 +89,7 @@ public class AuthenticationActivity extends AppCompatActivity implements View.On
     private static final int RC_SIGN_IN = 9001;
     private static GoogleSignInClient mGoogleSignInClient;
     private ImageView backgroundImageView;
+    Activity homeActivity;
     LoadingbarFragment loadingbarFragment;
 
     private static AuthenticationActivity instance;
@@ -83,13 +98,30 @@ public class AuthenticationActivity extends AppCompatActivity implements View.On
         super.onCreate(savedInstanceState);
         instance = this;
         setContentView(R.layout.activity_authentication);
+        homeActivity = this;
 
         demoButton = findViewById(R.id.demouser);
         demoButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                finish();
-            }
+              @Override
+              public void onClick(View v) {
+                  firebaseContext.mAuth.signInWithEmailAndPassword("demo@htl-leonding.ac.at","admin00")
+                          .addOnCompleteListener(homeActivity, new OnCompleteListener<AuthResult>() {
+                      @Override
+                      public void onComplete(@NonNull Task<AuthResult> task) {
+                          if (task.isSuccessful()) {
+                              Log.d(TAG, "signInWithEmail:success");
+                              Toast.makeText(AuthenticationActivity.this, "Authentication with Email successful.",
+                                      Toast.LENGTH_SHORT).show();
+                          } else {
+                              Log.w(TAG, "signInWithEmail:failure", task.getException());
+                              Toast.makeText(AuthenticationActivity.this, "Authentication with Email failed.",
+                                      Toast.LENGTH_SHORT).show();
+                          }
+
+                          finish();
+                      }
+                  });
+              }
         });
 
         backgroundImageView = findViewById(R.id.iv_background);

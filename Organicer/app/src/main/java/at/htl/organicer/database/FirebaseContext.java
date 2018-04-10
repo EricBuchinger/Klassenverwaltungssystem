@@ -147,7 +147,7 @@ public class FirebaseContext {
         addEventListener();
     }
     private void showError(String message){
-        AlertDialog.Builder builder = new AlertDialog.Builder(StartupActivity.context);
+        AlertDialog.Builder builder = new AlertDialog.Builder(StartupActivity.getInstance());
 
         builder.setMessage(message)
                 .setTitle("Error");
