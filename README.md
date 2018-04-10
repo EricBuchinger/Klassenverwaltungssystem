@@ -3,42 +3,33 @@
 ![alt text](https://i.imgur.com/3DxieTj.jpg)
 
 
-## New Features!
+## Documentation
 
-  - Event hinzufügen
-  - Mit Facebook einloggen
-  - Mit Google einloggen
-  - Verknüpfung des WebUntis Konto mit der App herstellen
-  
-> Dadurch, dass man fehlende Lernunterlagen hat, kann man schwer für Tests oder etwaige Sachen lernen. Die Unterlagen werden durch Social-Media Plattformen geteilt, sind jedoch nicht übersichtlich gegenzeichnet und damit verliert man viel Zeit beim Suchen oder es wird sogar nichts gefunden. Die Organisation funktioniert, aber ist jedoch sehr mühsam und leicht zum 
-unterschätzen bzw. zu übersehen.Ziel ist es daher mit dem Organicer die Planung innerhalb des Schuljahres zu verbessern und  eine Möglichkeit zu entwickeln um das Sortieren, Filtern und Suchen der Schulunterlagen zu erleichtern um somit die Zeit
-fürs Lernen zu investieren zu können. 
-
+  - Login with your Facebook or Google Account and connect it to your WebUntis Account for easy and secure access!
+  - Login with a Demo Account. Just click on the Demo User button on the top and you will be logged in with the demo-email 'demo@duke.htl-     leonding.ac.at. You will automatically be added to the class 5CHIF to see and edit the event. You can also use all other features.
+  - Add new events like incoming tests or homeworks!
+  - Only see the events from your classmates!
+  - You can easily choose if the the event is fake news or not. If more people confirm this, the event will be removed.
+ 
+ 
 
 ### Navigate to your working directory(where the .git file is located)
-#### Actual Branch is : dezember!
+#### Actual Branch is : loadingscreen!
 
 ### HowTo : Pull
 
 ```sh
-$ git checkout branch
+$ git checkout -branch
 $ git pull origin branch
 ```
 
 ### HowTo : Push
 
 ```sh
-$ git checkout branch
+$ git checkout -branch
 $ git add .
-$ git commit -m "What have been added/deleted?"
+$ git commit -m "What have been added/deletet?"
 $ git push origin branch
 ```
 
-### HowTo : Merge
-#### For example: You work in buchinger branch and commit something that finally works, you have to merge it to the actual Branch. Not to master! Change the branch to the actual branch und merge your branch with the actual branch as you see in the following example.
-
-```sh
-$ git checkout actualBranch
-$ git merge branch
-```
 
