@@ -49,6 +49,16 @@ public class FirebaseContext {
     private LoadingbarFragment loadingbarFragment;
     private Context context;
 
+    public int getKlassenId() {
+        return klassenId;
+    }
+
+    public void setKlassenId(int klassenId) {
+        this.klassenId = klassenId;
+    }
+
+    private int klassenId;
+
     public static FirebaseContext getInstance(){
         if(instance==null){
             return new FirebaseContext();
@@ -87,8 +97,8 @@ public class FirebaseContext {
                 }
                 else{
                     try {
-                        String sessionId = RestHelperAlternative.authUser(webUntisUser.getUsername(), webUntisUser.getPassword());
-                        if(sessionId==null){
+                        RestHelperAlternative.AuthData authData = RestHelperAlternative.authUser(webUntisUser.getUsername(), webUntisUser.getPassword());
+                        if(authData.getSessionId()==null){
                             Log.e(TAG,"Falscher Benutzername oder Passwort!");
                                 showError("Sie haben einen falschen Benutzernamen oder ein falsches Passwort eingegeben!");
 
@@ -98,11 +108,12 @@ public class FirebaseContext {
                             fragmentManager.beginTransaction().replace(R.id.container_main, webUntisUserFragment, "WebUntisUserFragment").commit();
                             //fragmentManager.beginTransaction().add(R.id.container_main, loadingbarFragment, "LoadingbarFragment").commit();
                         }
-                        if(sessionId!=null) {
-                            dataHelper.setSessionId(sessionId);
+                        if(authData.getSessionId()!=null) {
+                            dataHelper.setAuthData(authData);
                             dataHelper = RestHelperAlternative.getDataFromWebuntis(dataHelper);
                             //fragmentManager.beginTransaction().remove(loadingbarFragment).commit(); //todo
-
+                            //FIXME //TODO //FIXME //TODO //FIXME //TODO //FIXME //TODO
+                            setKlassenId(Integer.parseInt(dataHelper.getAuthData().getKlasseId()));
                             fragmentManager
                                     .beginTransaction()
                                     .replace(R.id.container_main, new StartUpFragmentPortrait(),"StartUpPortraitFragment")

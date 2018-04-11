@@ -12,6 +12,7 @@ import at.htl.organicer.entities.Student;
 import at.htl.organicer.entities.Subject;
 import at.htl.organicer.entities.Teacher;
 import at.htl.organicer.entities.TimeGrid;
+import at.htl.organicer.entities.TimeTable;
 import at.htl.organicer.entities.Weekday;
 import at.htl.organicer.entities.TimeUnit;
 
@@ -20,7 +21,7 @@ import at.htl.organicer.entities.TimeUnit;
  */
 
 public class SessionDataHelper {
-    private String sessionId;
+    private RestHelperAlternative.AuthData authData;
     private LinkedList<Teacher> teachers;
     private LinkedList<Student> students;
     private LinkedList<Subject> subjects;
@@ -38,23 +39,16 @@ public class SessionDataHelper {
         return timeGrids;
     }
 
-    public void setTimeGrids(LinkedList<TimeGrid> timeGrids) {
+    private void setTimeGrids(LinkedList<TimeGrid> timeGrids) {
         this.timeGrids = timeGrids;
-    }
-
-    public String getSessionId() {
-        return sessionId;
-    }
-
-    public void setSessionId(String sessionId) {
-        this.sessionId = sessionId;
     }
 
     public LinkedList<Teacher> getTeachers() {
         return teachers;
     }
 
-    public void setTeachers(LinkedList<Teacher> teachers) {
+
+    private void setTeachers(LinkedList<Teacher> teachers) {
         this.teachers = teachers;
     }
 
@@ -62,7 +56,7 @@ public class SessionDataHelper {
         return students;
     }
 
-    public void setStudents(LinkedList<Student> students) {
+    private void setStudents(LinkedList<Student> students) {
         this.students = students;
     }
 
@@ -70,7 +64,7 @@ public class SessionDataHelper {
         return subjects;
     }
 
-    public void setSubjects(LinkedList<Subject> subjects) {
+    private void setSubjects(LinkedList<Subject> subjects) {
         this.subjects = subjects;
     }
 
@@ -199,8 +193,26 @@ public class SessionDataHelper {
                 setTimeGrids(tempTimeGrids);
                 break;
 
+            case "timeTable":
+                TimeTable actualTimeTable = new TimeTable();
+                JSONArray tempArray;
+
+                for(int i = 0; i < data.length();  i++){
+                    actual = (JSONObject) data.get(i);
+                    actualTimeTable.setId(actual.getInt("id"));
+
+                }
+                break;
             default:
                 throw new RuntimeException("Invalid parsetype");
         }
+    }
+
+    public RestHelperAlternative.AuthData getAuthData() {
+        return authData;
+    }
+
+    public void setAuthData(RestHelperAlternative.AuthData authData) {
+        this.authData = authData;
     }
 }

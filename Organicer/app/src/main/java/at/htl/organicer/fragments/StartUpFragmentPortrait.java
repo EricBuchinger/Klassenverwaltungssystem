@@ -85,7 +85,7 @@ public class StartUpFragmentPortrait extends Fragment {
         Calendar calendar = Calendar.getInstance();
         Date date = calendar.getTime();
 
-        Weekday today = Weekday.valueOf(new SimpleDateFormat("EEEE", Locale.GERMAN).format(date.getTime()));
+        /*Weekday today = Weekday.valueOf(new SimpleDateFormat("EEEE", Locale.GERMAN).format(date.getTime()));
         LinkedList<TimeUnit> timeUnitsOfToday = new LinkedList<>();
 
         for(int i = 0; i < dataHelper.getTimeGrids().size(); i++)
@@ -96,7 +96,7 @@ public class StartUpFragmentPortrait extends Fragment {
             }
 
         if(timeUnitsOfToday.size() == 0) throw new RuntimeException("Today is not found");
-
+*/
 
         // TODO except Sunday
         // if(today.toString() == "Sunday")

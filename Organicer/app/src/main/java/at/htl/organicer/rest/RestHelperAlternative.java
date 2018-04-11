@@ -32,7 +32,36 @@ public class RestHelperAlternative {
     private static final String URL_SCHOOLNAME = URL + "?school=htbla linz leonding";
     private static final String APIKEY = "DACE2CO6HRCEKDOM";
 
-    public static String authUser(String username, String password) {
+    public static class AuthData{
+
+        public AuthData(String sessionId, String klasseId){
+            setKlasseId(klasseId);
+            setSessionId(sessionId);
+        }
+
+        public String getSessionId() {
+            return sessionId;
+        }
+
+        public void setSessionId(String sessionId) {
+            this.sessionId = sessionId;
+        }
+
+        public String getKlasseId() {
+            return klasseId;
+        }
+
+        void setKlasseId(String klasseId) {
+            this.klasseId = klasseId;
+        }
+
+        private String sessionId;
+        private String klasseId;
+
+
+    }
+
+    public static AuthData authUser(String username, String password) {
 
         //FIXME: Hotfix, suboptimal
         StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder().permitAll().build();
@@ -90,18 +119,22 @@ public class RestHelperAlternative {
 
             object = object.getJSONObject("result");
 
-            return object.getString("sessionId");
+            return new AuthData(object.getString("sessionId"), object.getString("klasseId"));
         }catch (JSONException | IOException ex){
             return null;
         }
     }
 
-    private static JSONArray getData(SessionDataHelper dataHelper, String methodName) throws JSONException, IOException {
+    private static JSONArray getData(SessionDataHelper dataHelper, String methodname) throws IOException, JSONException {
+        return getData(dataHelper, methodname, null);
+    }
+
+    private static JSONArray getData(SessionDataHelper dataHelper, String methodName, String params) throws JSONException, IOException {
         HttpURLConnection httpURLConnection = (HttpURLConnection) new URL(URL_SCHOOLNAME).openConnection(); //TODO: Request must not be resetted.
         httpURLConnection.setDoOutput(true);
         httpURLConnection.setRequestProperty("Content-Type", "application/json");
         httpURLConnection.setRequestProperty("Accept", "application/json");
-        httpURLConnection.setRequestProperty("Cookie", "JSESSIONID=" + dataHelper.getSessionId());
+        httpURLConnection.setRequestProperty("Cookie", "JSESSIONID=" + dataHelper.getAuthData().getSessionId());
         httpURLConnection.setRequestMethod("POST");
         httpURLConnection.connect();
 
@@ -109,7 +142,7 @@ public class RestHelperAlternative {
         JSONObject standardParams = new JSONObject();
         standardParams.put("id", "ID");
         standardParams.put("method", methodName);
-        standardParams.put("params", null);
+        standardParams.put("params", params);
         standardParams.put("jsonrpc", "2.0");
 
         //Write
@@ -133,18 +166,21 @@ public class RestHelperAlternative {
         String result = sb.toString();
 
         JSONObject asJsonObject = new JSONObject(result);
-        JSONArray jsonArray = asJsonObject.getJSONArray("result");
 
-        return jsonArray;
+        return asJsonObject.getJSONArray("result");
     }
 
     public static SessionDataHelper getDataFromWebuntis(SessionDataHelper dataHelper) throws IOException, JSONException {
-        dataHelper.parseData(getData(dataHelper, "getTimegridUnits"), "timegrid");
+        //dataHelper.parseData(getData(dataHelper, "getTimegridUnits"), "timegrid");
 
         //TODO: do this in background
-        dataHelper.parseData(getData(dataHelper, "getTeachers"), "teacher");
-        dataHelper.parseData(getData(dataHelper, "getSubjects"), "subject");
-        dataHelper.parseData(getData(dataHelper, "getStudents"), "student");
+        //dataHelper.parseData(getData(dataHelper, "getTeachers"), "teacher");
+        //dataHelper.parseData(getData(dataHelper, "getSubjects"), "subject");
+        //dataHelper.parseData(getData(dataHelper, "getStudents"), "student");
+
+
+        //String params = "{\"options\":{\"element\":{\"id\":" + dataHelper.getAuthData().getKlasseId() + ",\"type\":1},\"showStudentgroup\":true,\"showLsText\":true,\"showLsNumber\":true,\"showInfo\":true,\"showSubstText\":true,\"subjectFields\":[\"longname\"],\"teacherFields\":[\"longname\"]}";
+         //       dataHelper.parseData(getData(dataHelper, "getTimetable", params), "timeTable");
 
         /*
         JSONArray classes = getData(dataHelper, "getKlassen");
