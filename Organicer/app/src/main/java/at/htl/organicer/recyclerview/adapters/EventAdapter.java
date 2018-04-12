@@ -38,20 +38,21 @@ public class EventAdapter extends RecyclerView.Adapter<EventViewHolder> {
         holder.buttonDownVote.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                eventList.get(position).addDislike(FirebaseContext.getInstance().mAuth.getUid());
-                FirebaseContext.getInstance().updateEvent(eventList.get(position));
                 if(!eventList.get(position).userDislikes.contains(FirebaseContext.getInstance().mAuth.getUid()))
                     FirebaseContext.getInstance().showMessage("Downvote hinzugefügt!");
+                eventList.get(position).addDislike(FirebaseContext.getInstance().mAuth.getUid());
+                FirebaseContext.getInstance().updateEvent(eventList.get(position));
 
             }
         });
         holder.buttonUpVote.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                eventList.get(position).addUpvote(FirebaseContext.getInstance().mAuth.getUid());
-                FirebaseContext.getInstance().updateEvent(eventList.get(position));
                 if(!eventList.get(position).userUpvotes.contains(FirebaseContext.getInstance().mAuth.getUid()))
                     FirebaseContext.getInstance().showMessage("Upvote hinzugefügt!");
+                eventList.get(position).addUpvote(FirebaseContext.getInstance().mAuth.getUid());
+                FirebaseContext.getInstance().updateEvent(eventList.get(position));
+
             }
         });
     }
