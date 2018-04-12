@@ -6,8 +6,9 @@ Facebook Authentication | API Rest Abfragen | Dokumente | Dokumente
 Google Authentication | Loadingscreen | |
 WebUntis User Login |UI entworfen | |
 Event hinzufügen | Backgrounddesign| |
-Firebase Authentication konfiguration | | |
+Firebase Authentication konfiguration | Klassenzuordnung | |
 Firebase Database angelegt & Regeln| | |
+Redakteursystem| | |
 
 # Arbeitsaufteilung Detail
 
