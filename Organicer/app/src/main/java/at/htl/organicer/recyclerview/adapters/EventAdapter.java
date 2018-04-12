@@ -11,6 +11,7 @@ import java.util.List;
 
 
 import at.htl.organicer.R;
+import at.htl.organicer.database.FirebaseContext;
 import at.htl.organicer.entities.Event;
 import at.htl.organicer.recyclerview.viewholders.EventViewHolder;
 
@@ -32,9 +33,27 @@ public class EventAdapter extends RecyclerView.Adapter<EventViewHolder> {
     }
 
     @Override
-    public void onBindViewHolder(EventViewHolder holder, int position) {
+    public void onBindViewHolder(EventViewHolder holder, final int position) {
         holder.updateUI(eventList.get(position));
-        //todo onclicklistener
+        holder.buttonDownVote.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                eventList.get(position).addDislike(FirebaseContext.getInstance().mAuth.getUid());
+                FirebaseContext.getInstance().updateEvent(eventList.get(position));
+                if(!eventList.get(position).userDislikes.contains(FirebaseContext.getInstance().mAuth.getUid()))
+                    FirebaseContext.getInstance().showMessage("Downvote hinzugefügt!");
+
+            }
+        });
+        holder.buttonUpVote.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                eventList.get(position).addUpvote(FirebaseContext.getInstance().mAuth.getUid());
+                FirebaseContext.getInstance().updateEvent(eventList.get(position));
+                if(!eventList.get(position).userUpvotes.contains(FirebaseContext.getInstance().mAuth.getUid()))
+                    FirebaseContext.getInstance().showMessage("Upvote hinzugefügt!");
+            }
+        });
     }
 
 

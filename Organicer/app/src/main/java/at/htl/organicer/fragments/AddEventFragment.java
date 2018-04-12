@@ -104,7 +104,11 @@ public class AddEventFragment extends Fragment {
                         LinkedList<Event> events = mContext.events;
                         int id = events.size();
                         event.setId(id);
-                        mDatabase.child("events").child(String.valueOf(String.valueOf(id))).setValue(event);
+                        int klassenid = FirebaseContext.getInstance().getKlassenId();
+                        mDatabase.child("events")
+                                .child(String.valueOf(klassenid))
+                                .child(String.valueOf(String.valueOf(id)))
+                                .setValue(event);
                         Toast.makeText(getActivity().getApplicationContext(),"Event wurde erfolgreich erstellt",Toast.LENGTH_LONG);
                         getFragmentManager().popBackStack();
                     }catch (Exception e){

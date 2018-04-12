@@ -3,6 +3,7 @@ package at.htl.organicer.database;
 import android.content.Context;
 import android.support.v7.app.AlertDialog;
 import android.util.Log;
+import android.widget.Toast;
 
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.UserInfo;
@@ -15,8 +16,10 @@ import com.google.firebase.database.ValueEventListener;
 import org.json.JSONException;
 
 import java.io.IOException;
+import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.Map;
 
 import at.htl.organicer.R;
 import at.htl.organicer.activities.StartupActivity;
@@ -50,18 +53,21 @@ public class FirebaseContext {
     private Context context;
 
     public int getKlassenId() {
-        return klassenId;
+        return this.klassenId;
     }
 
     public void setKlassenId(int klassenId) {
         this.klassenId = klassenId;
+        addEventListener();
+        Log.d(TAG,"Klassenid:"+String.valueOf(this.klassenId));
     }
 
     private int klassenId;
 
     public static FirebaseContext getInstance(){
         if(instance==null){
-            return new FirebaseContext();
+            instance = new FirebaseContext();
+            return instance;
         }
         else
             return instance;
@@ -72,7 +78,9 @@ public class FirebaseContext {
     }
 
     public void addEventListener(){
-        mDatabase.child("events").addValueEventListener(postEventListener);
+        if(klassenId!=0) {
+            mDatabase.child("events").child(String.valueOf(klassenId)).addValueEventListener(postEventListener);
+        }
     }
 
     private FirebaseContext(){
@@ -140,9 +148,22 @@ public class FirebaseContext {
             public void onDataChange(DataSnapshot dataSnapshot) {
                 events.clear();
                 for(DataSnapshot postSnapshot : dataSnapshot.getChildren()){
-                    Event e = postSnapshot.getValue(Event.class);
+                  Event e = postSnapshot.getValue(Event.class);
+                  if(e.userDislikes.size()>=5){
+                      DatabaseReference deleteReference = mDatabase.getDatabase().getReference("/events/" + klassenId+"/"+e.id);
+                      deleteReference.removeValue();
+                      showMessage("Das Event wurde aufgrund von fünf Dislikes entfernt");
+                  }
+                  else if(e.userUpvotes.size()>=5 && !e.isConfirmed()){
+                      e.setConfirmed(true);
+                      updateEvent(e);
+                      events.add(e);
+                      showMessage("Das Event wurde aufgrund von 5 Upvotes bestätigt");
+                  }
+                  else
                     events.add(e);
 
+                  Log.d(TAG,"Get Events sucessfull");
                 }
                 StartUpFragmentPortrait startUpFragmentPortrait = (StartUpFragmentPortrait)fragmentManager
                         .findFragmentByTag("StartUpPortraitFragment");
@@ -155,8 +176,20 @@ public class FirebaseContext {
 
             }
         };
-        addEventListener();
+        //addEventListener();
     }
+    public void updateEvent(Event e){
+        Map<String,Object> eventValues;
+        eventValues = e.toMap();
+        Map<String, Object> childUpdates = new HashMap<>();
+        childUpdates.put("/events/" + klassenId+"/"+e.id, eventValues);
+        mDatabase.updateChildren(childUpdates);
+    }
+
+    public void showMessage(String message){
+        Toast.makeText(StartupActivity.getInstance(),message,Toast.LENGTH_LONG).show();
+    }
+
     private void showError(String message){
         AlertDialog.Builder builder = new AlertDialog.Builder(StartupActivity.getInstance());
 
