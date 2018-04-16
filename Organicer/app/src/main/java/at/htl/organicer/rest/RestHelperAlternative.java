@@ -34,7 +34,7 @@ public class RestHelperAlternative {
 
     public static class AuthData{
 
-        public AuthData(String sessionId, String klasseId){
+        AuthData(String sessionId, String klasseId){
             setKlasseId(klasseId);
             setSessionId(sessionId);
         }
@@ -58,29 +58,31 @@ public class RestHelperAlternative {
         private String sessionId;
         private String klasseId;
 
-
-    }
-
-    public static AuthData authUser(String username, String password) {
+        /*
 
         //FIXME: Hotfix, suboptimal
         StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder().permitAll().build();
         StrictMode.setThreadPolicy(policy);
 
-        JSONObject userdata = new JSONObject();
 
+        put this at the beginning of authUser()
+         */
+
+
+    }
+
+    public static AuthData authUser(String username, String password) {
+        JSONObject userdata = new JSONObject();
         try {
             userdata.put("user", username);
             userdata.put("password", password);
             userdata.put("client", "Organicer");
-
 
             JSONObject standardParams = new JSONObject();
             standardParams.put("id", "ID");
             standardParams.put("method", "authenticate");
             standardParams.put("params", userdata);
             standardParams.put("jsonrpc", "2.0");
-
 
             HttpURLConnection httpURLConnection;
 
@@ -91,7 +93,6 @@ public class RestHelperAlternative {
             httpURLConnection.setRequestMethod("POST");
             httpURLConnection.connect();
 
-
             //Write
             OutputStream os = httpURLConnection.getOutputStream();
             BufferedWriter writer = new BufferedWriter(new OutputStreamWriter(os, "UTF-8"));
@@ -99,10 +100,8 @@ public class RestHelperAlternative {
             writer.close();
             os.close();
 
-
             //Read
             BufferedReader br = new BufferedReader(new InputStreamReader(httpURLConnection.getInputStream(), "UTF-8"));
-
 
             String line = null;
             StringBuilder sb = new StringBuilder();
@@ -113,10 +112,7 @@ public class RestHelperAlternative {
 
             br.close();
             String result = sb.toString();
-
-
             JSONObject object = new JSONObject(result);
-
             object = object.getJSONObject("result");
 
             return new AuthData(object.getString("sessionId"), object.getString("klasseId"));
@@ -137,7 +133,6 @@ public class RestHelperAlternative {
         httpURLConnection.setRequestProperty("Cookie", "JSESSIONID=" + dataHelper.getAuthData().getSessionId());
         httpURLConnection.setRequestMethod("POST");
         httpURLConnection.connect();
-
 
         JSONObject standardParams = new JSONObject();
         standardParams.put("id", "ID");
@@ -161,12 +156,10 @@ public class RestHelperAlternative {
         while ((line = br.readLine()) != null) {
             sb.append(line);
         }
-
         br.close();
         String result = sb.toString();
 
         JSONObject asJsonObject = new JSONObject(result);
-
         return asJsonObject.getJSONArray("result");
     }
 
